@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Creative Developer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- EmailJS SDK with specific version 3.11.0 -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3.11.0/dist/email.min.js"></script>
+    <!-- Backup initialization to ensure EmailJS is properly loaded -->
+    <script type="text/javascript">
+       (function() {
+          emailjs.init("9y31Q3U_h-7v8OEjY"); // CHANGE THIS to your actual user ID
+       })();
+    </script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader">
+            <div class="loader-circle"></div>
+            <p>Loading Portfolio...</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">Portfolio</span>
+                <div class="logo-dot"></div>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
+                <li><a href="#internships" class="nav-link">Experience</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursor-follower"></div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+                <div class="shape shape-4"></div>
+            </div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-line">Associate Software</span>
+                    <span class="title-line">Engineer</span>
+                    <span class="title-accent">Security & Automation</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Building secure systems and intelligent automation solutions with cutting-edge technology
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">
+                        <span>View Projects</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <span>Get In Touch</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="profile-card-container">
+                    <!-- Standing profile picture with skills floating around -->
+                    <div class="profile-silhouette">
+                        <img src="Resources/Pic.jpg" alt="Ragul Ravi" class="profile-img">
+                    </div>              
+                    <!-- Name and role with gradient -->
+                    <div class="profile-details">
+                        <h3 class="profile-name">Ragul Ravi</h3>
+                        <div class="profile-title">Computer Science (Cyber Security) Engineer</div>
+                    </div>
+                    <!-- Floating skill icons -->
+                    <div class="floating-skills">
+                        <div class="skill-icon skill-icon-1"><i class="fab fa-java"></i></div>
+                        <div class="skill-icon skill-icon-2"><i class="fab fa-python"></i></div>
+                        <div class="skill-icon skill-icon-3"><i class="fab fa-html5"></i></div>
+                        <div class="skill-icon skill-icon-4"><i class="fab fa-css3-alt"></i></div>
+                        <div class="skill-icon skill-icon-5"><i class="fab fa-js-square"></i></div>
+                        <div class="skill-icon skill-icon-6"><i class="fas fa-robot"></i></div>
+                        <div class="skill-icon skill-icon-7"><i class="fas fa-chart-bar"></i></div>
+                        <div class="skill-icon skill-icon-8"><i class="fas fa-lock"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-line"></div>
+            <span>Scroll Down</span>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <h2 class="section-title">About Me</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-text centered-about">
+                    <h3>Dedicated Computer Science Engineering (Cyber Security) Undergraduate</h3>
+                    <p>
+                        I am a final year Computer Science Engineering specialization in Cyber Security at Saveetha Engineering College, Chennai. I specialize in programming, automation, and real-world tech solutions, with hands-on experience in secure messaging systems, AI resume analysis, and workflow automation.
+                    </p>
+                    <p>
+                        My journey includes developing automation flows at Accenture, building secure web applications, and creating AI-powered SaaS platforms. I am passionate about privacy, security, and innovative technology.
+                    </p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-number">7.2</span>
+                            <span class="stat-label">CGPA</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">2026</span>
+                            <span class="stat-label">Expected Graduation</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">2</span>
+                            <span class="stat-label">Internships (2 months)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="education section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2 class="section-title">Education</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="education-content">
+                <div class="edu-card">
+                    <div class="edu-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="edu-details">
+                        <h3 class="edu-college">Saveetha Engineering College</h3>
+                        <div class="edu-degree">B.E. Computer Science Engineering <span class="edu-special">(Cyber Security)</span></div>
+                        <div class="edu-location">
+                            <i class="fas fa-map-marker-alt"></i> Chennai, Tamil Nadu
+                        </div>
+                        <div class="edu-timeline">
+                            <span class="edu-timeline-badge">2022 - 2026</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Experience Section -->
+    <section id="internships" class="experience section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2 class="section-title">Experience</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="experience-grid">
+                <div class="experience-card accenture-card">
+                    <div class="card-header">
+                        <i class="fas fa-robot" style="font-size:24px;margin-right:8px;vertical-align:middle;"></i>
+                        <h4><span style="background: linear-gradient(135deg, #8a2be2, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600;">Associate Software Engineer</span> | Intern – Power Automate (Accenture)</h4>
+                    </div>
+                    <div class="card-content">
+                        <p class="experience-period">May 2025 – July 2025</p>
+                        
+                        <div class="project-sections">
+                            <div class="project-section">
+                                <h5><i class="fas fa-folder-open"></i> Project: Resource Dump Automation</h5>
+                                <p>Converted a daily Excel-based resource tracking system with manual VBA macros into an automated, cloud-based Power Automate workflow for improved reliability and scalability.</p>
+                            </div>
+                            
+                            <div class="project-section">
+                                <h5><i class="fas fa-exclamation-circle"></i> Problem</h5>
+                                <p>The team previously used a VBA macro to structure data for reporting in Power BI, but it was manual, error-prone, and couldn't scale with increasing data volumes across departments.</p>
+                            </div>
+                            
+                            <div class="project-section">
+                                <h5><i class="fas fa-cogs"></i> My Role</h5>
+                                <p>Designed a cloud-based Power Automate workflow that auto-triggers when files are uploaded to SharePoint, processes and categorizes data from 4 sheets (Testing, Dev, Other, GCP), extracts dates from filenames, and feeds directly to Power BI.</p>
+                            </div>
+                            
+                            <div class="project-section">
+                                <h5><i class="fas fa-chart-line"></i> Impact</h5>
+                                <p>Reduced manual PMO effort, improved data accuracy, enabled real-time dashboards, and provided historical insights for better resource planning and stakeholder decision-making.</p>
+                            </div>
+                            
+                            <div class="tech-pills">
+                                <span class="tech-pill">Power Automate</span>
+                                <span class="tech-pill">SharePoint</span>
+                                <span class="tech-pill">Power BI</span>
+                                <span class="tech-pill">Excel</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <h2 class="section-title">Skills & Technologies</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Programming Languages</h3>
+                    <div class="skill-items">
+                        <div class="skill-item"><i class="fab fa-java"></i><span>Java</span></div>
+                        <div class="skill-item"><i class="fas fa-code"></i><span>C</span></div>
+                        <div class="skill-item"><i class="fab fa-python"></i><span>Python</span></div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Web Technologies</h3>
+                    <div class="skill-items">
+                        <div class="skill-item"><i class="fab fa-html5"></i><span>HTML</span></div>
+                        <div class="skill-item"><i class="fab fa-css3-alt"></i><span>CSS</span></div>
+                        <div class="skill-item"><i class="fab fa-js-square"></i><span>JavaScript</span></div>
+                        <div class="skill-item"><i class="fab fa-react"></i><span>React.js</span></div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>IDE / Software</h3>
+                    <div class="skill-items">
+                        <div class="skill-item"><i class="fas fa-laptop"></i><span>IntelliJ IDEA</span></div>
+                        <div class="skill-item"><i class="fas fa-laptop"></i><span>VS Code</span></div>
+                        <div class="skill-item"><i class="fab fa-git-alt"></i><span>Git</span></div>
+                        <div class="skill-item"><i class="fas fa-robot"></i><span>Power Automate</span></div>
+                        <div class="skill-item"><i class="fas fa-chart-bar"></i><span>Power BI</span></div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Other Skills</h3>
+                    <div class="skill-items">
+                        <div class="skill-item"><i class="fas fa-cubes"></i><span>Data Structures & Algorithms</span></div>
+                        <div class="skill-item"><i class="fas fa-cube"></i><span>OOP</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">04</span>
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="image-placeholder">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://ciphertalk.dev/" class="project-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i></a>
+                                <a href="https://github.com/RagulRM/ciphertalk-webapp" class="project-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>CipherTalk – Web Based Application</h3>
+                        <p>Implemented AES encryption for secure text messaging and image steganography. Developed backend logic in Java, custom cryptography, and multi-layered security features for enhanced privacy.</p>
+                        <div class="project-tech">
+                            <span>Java</span>
+                            <span>Cryptography</span>
+                            <span>Steganography</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="image-placeholder">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://airesumeevaluator.ninja" class="project-link" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i></a>
+                                <a href="https://github.com/RagulRM/AI-Resume-Evaluator" class="project-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>AI-Powered Resume Evaluator – SaaS Platform</h3>
+                        <p>Developed a Flask-based web app to analyze resumes and match them with job descriptions. Used spaCy for keyword extraction, PyMuPDF for PDF parsing, and React.js for frontend user interaction.</p>
+                        <div class="project-tech">
+                            <span>Python</span>
+                            <span>Flask</span>
+                            <span>React.js</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">05</span>
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Let's work together</h3>
+                    <p>
+                        I'm always interested in hearing about new projects and opportunities. 
+                        Whether you have a question or just want to say hello, feel free to reach out!
+                    </p>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>r.ragulravi2005@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fab fa-linkedin"></i>
+                            <div>
+                                <h4>LinkedIn</h4>
+                                <p><a href="https://linkedin.com/in/ragulravi2005/" target="_blank">www.linkedin.com/in/ragulravi2005/</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fab fa-github"></i>
+                            <div>
+                                <h4>GitHub</h4>
+                                <p><a href="https://github.com/RagulRM" target="_blank">www.github.com/RagulRM</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Location</h4>
+                                <p>Chennai, Tamilnadu</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" required>
+                        <label for="name">Your Name</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" required>
+                        <label for="email">Your Email</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" required></textarea>
+                        <label for="message">Your Message</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span>Send Message</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p>&copy; 2025 Portfolio. All rights reserved.</p>
+                </div>
+                <!-- <div class="footer-right">
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/ragulravi2005/" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="www.github.com/RagulRM" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="r.ragulravi2005@gmail.com" class="social-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
