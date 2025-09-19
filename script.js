@@ -198,17 +198,17 @@ function animateStats() {
     if (statsAnimated) return;
     
     stats.forEach(stat => {
-        const target = parseInt(stat.textContent);
+        const target = parseFloat(stat.textContent);
         let current = 0;
-        const increment = target / 100;
+        const increment = target / 50;
         
         const updateStat = () => {
             if (current < target) {
                 current += increment;
-                stat.textContent = Math.floor(current) + (stat.textContent.includes('%') ? '%' : '+');
+                stat.textContent = current.toFixed(1);
                 requestAnimationFrame(updateStat);
             } else {
-                stat.textContent = target + (stat.textContent.includes('%') ? '%' : '+');
+                stat.textContent = target;
             }
         };
         
@@ -272,35 +272,24 @@ skillItems.forEach(item => {
     });
 });
 
-// Form submission with EmailJS v3.11.0
-// Initialize EmailJS on page load
-(function() {
-    // Add event listener for when the DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check if EmailJS is loaded
-        if (typeof emailjs !== 'undefined') {
-            try {
-                // REPLACE THIS WITH YOUR ACTUAL USER ID FROM EMAILJS DASHBOARD
-                emailjs.init("T-I7xqUEQTeSCiWgf");
-                
-                // Verify initialization
-                console.log("EmailJS SDK Version:", emailjs.SDK_VERSION);
-                console.log("EmailJS initialized successfully");
-                
-                // Show a notification that EmailJS is ready
-                setTimeout(() => {
-                    showNotification("Contact form ready", "info");
-                }, 2000);
-            } catch (error) {
-                console.error('EmailJS initialization error:', error);
-                showNotification('Contact form configuration error', 'error');
-            }
-        } else {
-            console.error('EmailJS library failed to load');
-            showNotification('Contact form is currently unavailable', 'error');
+// Form submission with EmailJS
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof emailjs !== 'undefined') {
+        try {
+            emailjs.init("T-I7xqUEQTeSCiWgf");
+            console.log("EmailJS initialized successfully");
+            setTimeout(() => {
+                showNotification("Contact form ready", "info");
+            }, 2000);
+        } catch (error) {
+            console.error('EmailJS initialization error:', error);
+            showNotification('Contact form configuration error', 'error');
         }
-    });
-})();
+    } else {
+        console.error('EmailJS library failed to load');
+        showNotification('Contact form is currently unavailable', 'error');
+    }
+});
 
 // Form submission handler
 document.querySelector('.contact-form').addEventListener('submit', function(e) {
@@ -556,10 +545,7 @@ function throttle(func, limit) {
     }
 }
 
-// Contact Form EmailJS Integration is handled above
-// No duplicate handler needed
-
-// Apply throttling to scroll events
+// Apply throttling to scroll events for better performance
 window.addEventListener('scroll', throttle(() => {
     updateActiveNav();
     revealText();
