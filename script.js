@@ -14,7 +14,7 @@ window.addEventListener('load', () => {
     }, 1500);
 });
 
-// Custom Cursor
+// Custom Cursor - Desktop Only
 let mouseX = 0;
 let mouseY = 0;
 let cursorX = 0;
@@ -22,44 +22,57 @@ let cursorY = 0;
 let followerX = 0;
 let followerY = 0;
 
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
+// Check if device supports hover (desktop)
+const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-function animateCursor() {
-    // Smooth cursor movement
-    cursorX += (mouseX - cursorX) * 0.3;
-    cursorY += (mouseY - cursorY) * 0.3;
+if (isDesktop && cursor && cursorFollower) {
+    // Show cursor elements on desktop
+    cursor.style.display = 'block';
+    cursorFollower.style.display = 'block';
     
-    followerX += (mouseX - followerX) * 0.1;
-    followerY += (mouseY - followerY) * 0.1;
-    
-    cursor.style.left = cursorX + 'px';
-    cursor.style.top = cursorY + 'px';
-    
-    cursorFollower.style.left = followerX + 'px';
-    cursorFollower.style.top = followerY + 'px';
-    
-    requestAnimationFrame(animateCursor);
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animateCursor() {
+        // Smooth cursor movement
+        cursorX += (mouseX - cursorX) * 0.3;
+        cursorY += (mouseY - cursorY) * 0.3;
+        
+        followerX += (mouseX - followerX) * 0.1;
+        followerY += (mouseY - followerY) * 0.1;
+        
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+        
+        cursorFollower.style.left = followerX + 'px';
+        cursorFollower.style.top = followerY + 'px';
+        
+        requestAnimationFrame(animateCursor);
+    }
+
+    animateCursor();
+
+    // Cursor hover effects
+    const hoverElements = document.querySelectorAll('a, button, .project-card, .skill-item, .experience-card');
+
+    hoverElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            cursor.classList.add('hover');
+            cursorFollower.classList.add('hover');
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            cursor.classList.remove('hover');
+            cursorFollower.classList.remove('hover');
+        });
+    });
+} else {
+    // Hide cursor elements on mobile
+    if (cursor) cursor.style.display = 'none';
+    if (cursorFollower) cursorFollower.style.display = 'none';
 }
-
-animateCursor();
-
-// Cursor hover effects
-const hoverElements = document.querySelectorAll('a, button, .project-card, .skill-item, .experience-card');
-
-hoverElements.forEach(element => {
-    element.addEventListener('mouseenter', () => {
-        cursor.classList.add('hover');
-        cursorFollower.classList.add('hover');
-    });
-    
-    element.addEventListener('mouseleave', () => {
-        cursor.classList.remove('hover');
-        cursorFollower.classList.remove('hover');
-    });
-});
 
 // Navigation
 hamburger.addEventListener('click', () => {
