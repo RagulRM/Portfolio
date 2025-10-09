@@ -1717,7 +1717,6 @@ body {
     .social-links {
         justify-content: center;
     }
-}
 
 /* Small Mobile Devices */
 @media (max-width: 480px) {
@@ -1748,4 +1747,167 @@ body {
     .project-content h3 {
         font-size: 1.3rem;
     }
+    /* Collapsible Experience Card Styles */
+.collapsible-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: var(--border-radius);
+}
+
+.experience-header:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.experience-title-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.experience-icon {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.toggle-icon {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.collapsible-card.active .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.experience-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, padding 0.3s ease-out;
+    padding: 0 1.5rem;
+}
+
+.collapsible-card.active .experience-details {
+    max-height: 2000px;
+    padding: 1.5rem;
+    transition: max-height 0.8s ease-in, padding 0.3s ease-in;
+}
+
+.experience-period {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+}
+
+/* Add indicator animation */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.collapsible-card:not(.active) .toggle-icon {
+    animation: bounce 2s infinite;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .experience-header {
+        padding: 1rem;
+    }
+    
+    .experience-title-section {
+        flex-direction: row;
+        gap: 0.8rem;
+    }
+    
+    .experience-icon {
+        font-size: 1.5rem;
+    }
+    
+    .experience-header h4 {
+        font-size: 1rem;
+    }
+    /* Add these styles for smooth transitions */
+.experience-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, opacity 0.3s ease-out;
+    opacity: 0;
+}
+
+.experience-details.active {
+    max-height: 1000px; /* Adjust based on content */
+    opacity: 1;
+}
+
+.toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.toggle-icon.active {
+    transform: rotate(180deg);
+}
+
+.experience-card {
+    transition: box-shadow 0.3s ease;
+}
+
+.experience-card:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+}
+.experience-title-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.experience-title-section .experience-icon {
+    font-size: 32px;
+    background: linear-gradient(135deg, #8a2be2, #00d4ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: float 3s ease-in-out infinite;
+}
+
+.experience-title-section h4 {
+    font-size: 1.2rem;
+    margin: 0;
+    background: linear-gradient(135deg, #8a2be2 0%, #00d4ff 50%, #4ecdc4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.experience-period {
+    font-size: 0.9rem;
+    color: #8892b0;
+    margin-top: 4px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.experience-header:hover h4 {
+    transform: translateX(10px);
+}
 }

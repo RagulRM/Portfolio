@@ -476,6 +476,48 @@ function createScrollProgress() {
 // Initialize scroll progress
 createScrollProgress();
 
+/* filepath: d:\Projects\Portfolio\script.js */
+// Toggle Experience Details
+function toggleExperience(header) {
+    const card = header.closest('.collapsible-card');
+    const details = card.querySelector('.experience-details');
+    
+    // Toggle active class
+    card.classList.toggle('active');
+    
+    // Toggle display
+    if (card.classList.contains('active')) {
+        details.style.display = 'block';
+    } else {
+        // Wait for animation before hiding
+        setTimeout(() => {
+            if (!card.classList.contains('active')) {
+                details.style.display = 'none';
+            }
+        }, 500);
+    }
+}
+// Add/modify this function
+function toggleExperience(header) {
+    const details = header.nextElementSibling;
+    const icon = header.querySelector('.toggle-icon');
+    
+    if (details.style.display === 'none') {
+        details.style.display = 'block';
+        // Force reflow
+        details.offsetHeight;
+        details.classList.add('active');
+        icon.classList.add('active');
+    } else {
+        details.classList.remove('active');
+        icon.classList.remove('active');
+        // Wait for transition to complete before hiding
+        setTimeout(() => {
+            details.style.display = 'none';
+        }, 500);
+    }
+}
+
 // Magnetic effect for buttons
 const magneticElements = document.querySelectorAll('.btn, .social-link, .project-link');
 
