@@ -5,6 +5,62 @@ const hamburger = document.getElementById('hamburger');
 const navMenu = document.getElementById('nav-menu');
 const cursor = document.getElementById('cursor');
 const cursorFollower = document.getElementById('cursor-follower');
+const themeToggle = document.getElementById('themeToggle');
+
+// Theme Toggle Functionality
+const htmlElement = document.documentElement;
+
+// Check for saved theme preference or default to light theme
+const currentTheme = localStorage.getItem('theme') || 'light';
+htmlElement.setAttribute('data-theme', currentTheme);
+
+// Theme toggle click handler
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        htmlElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Add ripple effect
+        createThemeRipple(themeToggle);
+    });
+}
+
+// Create ripple effect for theme toggle
+function createThemeRipple(button) {
+    const ripple = document.createElement('span');
+    ripple.style.cssText = `
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.6);
+        top: 0;
+        left: 0;
+        transform: scale(0);
+        animation: themeRipple 0.6s ease-out;
+        pointer-events: none;
+    `;
+    button.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+}
+
+// Add ripple animation if not exists
+if (!document.querySelector('#theme-ripple-style')) {
+    const style = document.createElement('style');
+    style.id = 'theme-ripple-style';
+    style.textContent = `
+        @keyframes themeRipple {
+            to {
+                transform: scale(2.5);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
 
 // Loading Screen
 window.addEventListener('load', () => {
@@ -55,7 +111,7 @@ if (isDesktop && cursor && cursorFollower) {
     animateCursor();
 
     // Cursor hover effects
-    const hoverElements = document.querySelectorAll('a, button, .project-card, .skill-item, .experience-card');
+    const hoverElements = document.querySelectorAll('a, button, .project-card, .skill-item');
 
     hoverElements.forEach(element => {
         element.addEventListener('mouseenter', () => {
@@ -199,7 +255,7 @@ window.addEventListener('scroll', () => {
     
     shapes.forEach((shape, index) => {
         const speed = (index + 1) * 0.1;
-        shape.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.1}deg)`;
+        shape.style.transform = `translateY(${scrolled * speed}px)`;
     });
 });
 
@@ -255,164 +311,138 @@ projectCards.forEach(card => {
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
+        const rotateX = (y - centerY) / 40;
+        const rotateY = (centerX - x) / 40;
         
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
     });
     
     card.addEventListener('mouseleave', () => {
         card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+        card.style.transition = 'transform 0.4s ease';
     });
 });
 
-// Skill items hover effect with random colors
+// Skill items hover effect with theme-aware colors
 const skillItems = document.querySelectorAll('.skill-item');
-const colors = ['#00d4ff', '#ff6b6b', '#4ecdc4', '#ffa726', '#ab47bc', '#26c6da'];
+
+const getAccentColors = () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    return isDark 
+        ? ['#93C5FD', '#A5B4FC', '#60A5FA', '#818CF8', '#7DD3FC']
+        : ['#1D4ED8', '#4F46E5', '#2563EB', '#4338CA', '#0284C7'];
+};
 
 skillItems.forEach(item => {
     item.addEventListener('mouseenter', () => {
+        const colors = getAccentColors();
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
         item.style.borderColor = randomColor;
         item.querySelector('i').style.color = randomColor;
-        item.style.boxShadow = `0 10px 30px ${randomColor}20`;
     });
     
     item.addEventListener('mouseleave', () => {
-        item.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+        item.style.borderColor = '';
         item.querySelector('i').style.color = 'var(--primary-color)';
-        item.style.boxShadow = 'none';
+        item.style.boxShadow = '';
     });
 });
 
-// Form submission with EmailJS
+// Form ready
 document.addEventListener('DOMContentLoaded', function() {
-    if (typeof emailjs !== 'undefined') {
-        try {
-            emailjs.init("T-I7xqUEQTeSCiWgf");
-            console.log("EmailJS initialized successfully");
-            setTimeout(() => {
-                showNotification("Contact form ready", "info");
-            }, 2000);
-        } catch (error) {
-            console.error('EmailJS initialization error:', error);
-            showNotification('Contact form configuration error', 'error');
-        }
-    } else {
-        console.error('EmailJS library failed to load');
-        showNotification('Contact form is currently unavailable', 'error');
-    }
+    // Contact form initialized silently
 });
 
-// Form submission handler
-document.querySelector('.contact-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Show loading state
-    const submitBtn = this.querySelector('button[type="submit"]');
-    const originalBtnText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<span>Sending...</span><i class="fas fa-circle-notch fa-spin"></i>';
-    submitBtn.disabled = true;
-    
-    // Show loading notification
-    showNotification('Sending message...', 'info');
-    
-    // Get form values directly from the form element
-    const formData = {
-        from_name: document.getElementById('name').value,
-        reply_to: document.getElementById('email').value,
-        message: document.getElementById('message').value,
-        to_name: 'Ragul Ravi'
-    };
-    
-    // Verify data before sending (debugging)
-    console.log('Attempting to send email with:', formData);
-    
-    // Send the main message to you
-    emailjs.send(
-        'service_uloqnsr',     // REPLACE: Your EmailJS service ID 
-        'template_wqv4cis',    // REPLACE: Your EmailJS template ID for messages to you
-        formData
-    )
-    .then(function(response) {
-        console.log('Main message sent successfully!', response.status, response.text);
+// Web3Forms submission handler
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
         
-        // Now send auto-reply to the sender
-        const autoReplyData = {
-            from_name: formData.from_name,
-            reply_to: formData.reply_to,
-            message: formData.message,
-            to_email: formData.reply_to
-        };
+        // Show loading state
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<span>Sending...</span><i class="fas fa-circle-notch fa-spin"></i>';
+        submitBtn.disabled = true;
         
-        return emailjs.send(
-            'service_uloqnsr',        // Same service ID
-            'template_q3qgl9j', // REPLACE: Your auto-reply template ID
-            autoReplyData
-        );
-    })
-    .then(function(response) {
-        console.log('Auto-reply sent successfully!', response.status, response.text);
-        showNotification('Message sent successfully! Check your email for confirmation.', 'success');
-        document.querySelector('.contact-form').reset();
+        // Show loading notification
+        showNotification('Sending message...', 'info');
         
-        // Restore button state
-        submitBtn.innerHTML = originalBtnText;
-        submitBtn.disabled = false;
-    })
-    .catch(function(err) {
-        console.error('FAILED...', err);
-        // Show detailed error to help debugging
-        let errorMsg = 'Failed to send message';
-        if (err && err.text) {
-            errorMsg += ': ' + err.text;
-        } else if (err && err.status) {
-            errorMsg += ' (Error ' + err.status + ')';
+        // Prepare form data
+        const formData = new FormData(this);
+        
+        try {
+            // Send to Web3Forms
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
+                this.reset();
+            } else {
+                throw new Error(data.message || 'Failed to send message');
+            }
+        } catch (error) {
+            console.error('Form submission error:', error);
+            showNotification('Failed to send message. Please try again or email directly.', 'error');
+        } finally {
+            // Restore button state
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
         }
-        showNotification(errorMsg, 'error');
-        
-        // Restore button state
-        submitBtn.innerHTML = originalBtnText;
-        submitBtn.disabled = false;
     });
-});
+}
 
 // Notification system
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
+    const bgColor = type === 'success' ? 'linear-gradient(135deg, #34d399, #059669)' 
+                   : type === 'error' ? 'linear-gradient(135deg, #f472b6, #dc2626)' 
+                   : 'linear-gradient(135deg, #60a5fa, #3B5FCC)';
     notification.style.cssText = `
         position: fixed;
         top: 20px;
         right: 20px;
-        background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196f3'};
+        background: ${bgColor};
         color: white;
         padding: 1rem 1.5rem;
-        border-radius: 8px;
+        border-radius: 12px;
         z-index: 10000;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        transform: translateX(120%);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        font-weight: 500;
+        font-size: 0.9rem;
+        backdrop-filter: blur(10px);
+        max-width: 360px;
     `;
     notification.textContent = message;
     
     document.body.appendChild(notification);
     
-    setTimeout(() => {
+    requestAnimationFrame(() => {
         notification.style.transform = 'translateX(0)';
-    }, 100);
+    });
     
     setTimeout(() => {
-        notification.style.transform = 'translateX(100%)';
+        notification.style.transform = 'translateX(120%)';
         setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 300);
+            if (notification.parentNode) {
+                document.body.removeChild(notification);
+            }
+        }, 400);
     }, 3000);
 }
 
 // Particle background effect
 function createParticles() {
     const particleContainer = document.createElement('div');
+    particleContainer.className = 'particle-container';
     particleContainer.style.cssText = `
         position: fixed;
         top: 0;
@@ -426,16 +456,17 @@ function createParticles() {
     
     document.body.appendChild(particleContainer);
     
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 12; i++) {
         const particle = document.createElement('div');
+        const size = 1 + Math.random() * 1.5;
         particle.style.cssText = `
             position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #00d4ff;
+            width: ${size}px;
+            height: ${size}px;
+            background: var(--primary-color);
             border-radius: 50%;
-            opacity: 0.1;
-            animation: float ${5 + Math.random() * 10}s ease-in-out infinite;
+            opacity: ${0.03 + Math.random() * 0.06};
+            animation: float ${10 + Math.random() * 15}s ease-in-out infinite;
             animation-delay: ${Math.random() * 5}s;
         `;
         
@@ -449,95 +480,11 @@ function createParticles() {
 // Initialize particles
 createParticles();
 
-// Scroll progress indicator
-function createScrollProgress() {
-    const progressBar = document.createElement('div');
-    progressBar.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 0%;
-        height: 3px;
-        background: linear-gradient(90deg, #00d4ff, #4ecdc4);
-        z-index: 10000;
-        transition: width 0.1s ease;
-    `;
-    
-    document.body.appendChild(progressBar);
-    
-    window.addEventListener('scroll', () => {
-        const scrolled = window.scrollY;
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = (scrolled / maxScroll) * 100;
-        progressBar.style.width = progress + '%';
-    });
-}
+// Magnetic effect removed for cleaner feel
 
-// Initialize scroll progress
-createScrollProgress();
-
-/* filepath: d:\Projects\Portfolio\script.js */
-// Toggle Experience Details
-function toggleExperience(header) {
-    const card = header.closest('.collapsible-card');
-    const details = card.querySelector('.experience-details');
-    
-    // Toggle active class
-    card.classList.toggle('active');
-    
-    // Toggle display
-    if (card.classList.contains('active')) {
-        details.style.display = 'block';
-    } else {
-        // Wait for animation before hiding
-        setTimeout(() => {
-            if (!card.classList.contains('active')) {
-                details.style.display = 'none';
-            }
-        }, 500);
-    }
-}
-// Add/modify this function
-function toggleExperience(header) {
-    const details = header.nextElementSibling;
-    const icon = header.querySelector('.toggle-icon');
-    
-    if (details.style.display === 'none') {
-        details.style.display = 'block';
-        // Force reflow
-        details.offsetHeight;
-        details.classList.add('active');
-        icon.classList.add('active');
-    } else {
-        details.classList.remove('active');
-        icon.classList.remove('active');
-        // Wait for transition to complete before hiding
-        setTimeout(() => {
-            details.style.display = 'none';
-        }, 500);
-    }
-}
-
-// Magnetic effect for buttons
-const magneticElements = document.querySelectorAll('.btn, .social-link, .project-link');
-
-magneticElements.forEach(element => {
-    element.addEventListener('mousemove', (e) => {
-        const rect = element.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        
-        element.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
-    });
-    
-    element.addEventListener('mouseleave', () => {
-        element.style.transform = 'translate(0, 0)';
-    });
-});
-
-// Text reveal animation on scroll
+// Text reveal animation on scroll - gentle fade only for non-hero elements
 function revealText() {
-    const textElements = document.querySelectorAll('h1, h2, h3, p');
+    const textElements = document.querySelectorAll('.section h2, .section h3, .about-text p, .contact-info > p');
     
     textElements.forEach(element => {
         const elementTop = element.getBoundingClientRect().top;
@@ -554,16 +501,32 @@ window.addEventListener('scroll', revealText);
 
 // Initialize all animations
 document.addEventListener('DOMContentLoaded', () => {
-    // Set initial states for text elements
-    const textElements = document.querySelectorAll('h1, h2, h3, p');
+    // Set initial states for section text elements only (not hero)
+    const textElements = document.querySelectorAll('.section h2, .section h3, .about-text p, .contact-info > p');
     textElements.forEach(element => {
         element.style.opacity = '0';
         element.style.transform = 'translateY(20px)';
-        element.style.transition = 'all 0.6s ease';
+        element.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
     });
     
     // Trigger initial reveal
     setTimeout(revealText, 100);
+    
+    // Scroll to top button
+    const scrollTopBtn = document.getElementById('scrollTop');
+    if (scrollTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+        
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 });
 
 // Easter egg: Konami code
@@ -605,3 +568,25 @@ window.addEventListener('scroll', throttle(() => {
     updateActiveNav();
     revealText();
 }, 16)); // ~60fps
+
+// Resume Button Handler
+const resumeBtn = document.getElementById('resumeBtn');
+if (resumeBtn) {
+    // Add context menu listener for download option
+    resumeBtn.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        // Trigger download
+        const link = document.createElement('a');
+        link.href = resumeBtn.href;
+        link.download = 'Ragul_Ravi_Resume.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Show notification
+        showNotification('Resume download started', 'success');
+    });
+    
+    // Add tooltip on hover
+    resumeBtn.setAttribute('title', 'Click to preview • Right-click to download');
+}
